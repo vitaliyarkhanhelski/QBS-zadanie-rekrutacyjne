@@ -7,4 +7,4 @@ ciąg bajtów, który powinniśmy zmienić we wszystkich plikach z podanym rozsz
 ciąg bajtów na który powinna się odbyć wymiana
 Ciąg bajtów może być wprowadzony w systemie dwójkowym, dziesiątkowym, szesnastkowym lub w inny sposób
 Rezultatem działania programu ma stać zamiana ciągu bajtów we wszystkich plikach oraz odpowiedni komunikat do użytkownika
-![alt text](https://drive.google.com/file/d/11G1OR6iv8MtwoWopuBtjXvmj3mNcVJUx/view?usp=sharing)
+![alt text](https://drive.google.com/file/d/117S9LdVUdZ_ZynlIEoFqJNTcuH_fiiPg/view?usp=sharing)
