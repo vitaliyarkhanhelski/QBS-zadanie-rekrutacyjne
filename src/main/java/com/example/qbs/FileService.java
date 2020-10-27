@@ -16,13 +16,15 @@ import java.util.List;
 public class FileService {
     /**
      * jedyna publiczna metoda, od której zaczyna się logika
-     * sprawdzamy czy ciągi bajtów w systemie dziesiątkowym są poprawne, jeśli tak, przekazujemy dane do zmiany plików
+     * sprawdzamy czy ciągi bajtów w systemie dziesiątkowym są poprawne i nie są takie same,
+     * jeśli tak, przekazujemy dane do zmiany plików
      * zwraca Komunikat dla użytkownika
      */
-    public String changeByteArrayInFile(String path, String extension, String toRemove, String toAdd) {
-        if (toRemove.equals(toAdd)) return "Ciągi bajtów są takie same";
-        if (!checkIfStringIsByteArray(toRemove) || !checkIfStringIsByteArray(toAdd))
+    public String changeByteArrayInFiles(String path, String extension, String toRemove, String toAdd) {
+        if (!checkIfStringIsByteArray(toRemove) || !checkIfStringIsByteArray(toAdd)) {
             return "Format kodu dziesiątkowego jest nieprawidłowy";
+        }
+        if (toRemove.equals(toAdd)) return "Ciągi bajtów są takie same";
         List<Byte> bytesToRemove = convertStringToByteArray(toRemove);
         List<Byte> bytesToAdd = convertStringToByteArray(toAdd);
         return changeBytesInFiles(path, extension, bytesToRemove, bytesToAdd);
@@ -30,7 +32,8 @@ public class FileService {
 
 
     /**
-     * jeżeli pliki o podanym rozszerzeniu istnieją tworzymy listę tych plików i próbujemy zmienić ciąg baytów
+     * jeśli pliki o podanym rozszerzeniu istnieją tworzymy listę tych plików
+     * i próbujemy zmienić ciąg bajtów w każdym pliku
      * zwraca odpowiedni Komunikat do użytkownika
      */
     public static String changeBytesInFiles(String path, String extension, List<Byte> bytesToRemove, List<Byte> bytesToAdd) {
@@ -41,7 +44,7 @@ public class FileService {
         List<File> files = getMatchingFilesList(path, extension, emptyList);
 
         if (files.size() == 0)
-            return "Żaden plik z rozszerzeniem \'" + extension + "\' nie istnieje w katalogu " + "\'" + path + "\'";
+            return "Żaden plik z rozszerzeniem '" + extension + "' nie istnieje w katalogu " + "'" + path + "'";
         else {
             for (File file : files) {
                 boolean result = changeBytesInOneFile(file.getAbsolutePath(), bytesToRemove, bytesToAdd);
@@ -56,7 +59,7 @@ public class FileService {
 
 
     /**
-     * dokonuje zmiany bajtów w pliku o podanych parametrach
+     * dokonuje zmiany bajtów w jednym pliku o podanych parametrach
      * zwraca false w przypadku gdy ciąg bytów nie został odnalziony i zamieniony
      */
     private static boolean changeBytesInOneFile(String absolutePath, List<Byte> bytesToRemove, List<Byte> bytesToAdd) {
@@ -97,9 +100,8 @@ public class FileService {
         String[] strings = stringToConvert.split(", ");
         List<Byte> bytes = new ArrayList<>();
 
-        for (int i = 0; i < strings.length; i++) {
-            bytes.add(Byte.valueOf(strings[i]));
-        }
+        for (String i : strings)
+            bytes.add(Byte.valueOf(i));
         return bytes;
     }
 
@@ -122,11 +124,12 @@ public class FileService {
 
 
     /**
-     * szuka za pomocą rekursji czy w ogóle mamy pliki o podanym rozszerzeniu w podanym katalogu oraz katalogach głównych
+     * szuka za pomocą rekursji czy w ogóle mamy pliki o podanym rozszerzeniu
+     * w podanym katalogu oraz podkatalogu
      */
     private static List<File> getMatchingFilesList(String path, String extension, List<File> filesList) {
         File directoryPath = new File(path);
-        File filesArray[] = directoryPath.listFiles();
+        File[] filesArray = directoryPath.listFiles();
 
         if (filesArray != null)
             for (File file : filesArray) {

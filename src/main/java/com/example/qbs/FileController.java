@@ -28,7 +28,7 @@ public class FileController {
                        @RequestParam String bytesToRemove,
                        @RequestParam String bytesToAdd,
                        ModelMap map) {
-        map.put("userMessage", fileService.changeByteArrayInFile(path, extension, bytesToRemove, bytesToAdd));
+        map.put("userMessage", fileService.changeByteArrayInFiles(path, extension, bytesToRemove, bytesToAdd));
 //      map.put("userMessage", path + "/" + extension + "/" + bytesToRemove + "/" + bytesToAdd);
         map.put("path",path);
         map.put("extension",extension);
