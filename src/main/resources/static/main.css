@@ -1,0 +1,13 @@
+body {
+    font-family: 'Poppins';
+    font-size: 22px;
+    background-color: #cee4f6;
+    background-image: linear-gradient(to bottom right, #f2f7fd, #def1fd, #d8ebfc);
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+html {
+    height: 100%;
+}

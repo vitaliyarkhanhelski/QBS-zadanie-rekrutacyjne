@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="main.css">
+
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+    <title>QBS</title>
+</head>
+<body>
+<div class="container mt-3">
+    <div>
+        <h2 style="text-align: center">Zmiana ciągu bytów we wsystkich plikach z odpowiednim rozszerzeniem w podanym
+            katalogu oraz podkatalogach</h2>
+        <hr>
+    </div>
+    <form method="post" action="/">
+        <div class="form-group">
+            <label for="path">Podaj ściężkę do katalogu:</label>
+            <input class="form-control" type="text" name="path" id="path" th:value="${path}"
+                   aria-describedby="pathHelp" placeholder="Ścieżka katalogu" required>
+            <small id="pathHelp" class="form-text text-muted">*Sprawdź nazwę katalogu, gdyż ta operacja może być
+                niebezpieczna</small>
+
+        </div>
+        <div class="form-group">
+            <label for="extension">Podaj rozszerzenie pliku:</label>
+            <input class="form-control col-3" type="text" id="extension" aria-describedby="extensionHelp"
+                   name="extension" th:value="${extension}" placeholder="Rozszerzenie pliku" required>
+            <small id="extensionHelp" class="form-text text-muted">*Rozszerzenie bez kropki</small>
+        </div>
+
+        <div class="form-group">
+            <label for="bytesToRemove">Podaj ciąg bytów który powinniśmy zmienić:</label>
+            <input class="form-control" id="bytesToRemove" name="bytesToRemove"
+                      th:value="${bytesToRemove}" aria-describedby="bytesToRemoveHelp" placeholder="Ciąg bajtów" required>
+            <small id="bytesToRemoveHelp" class="form-text text-muted">*W systemie dziesiątkowym</small>
+        </div>
+
+        <div class="form-group">
+            <label for="bytesToAdd">Podaj ciąg bytów na który powinniśmy zmienić:</label>
+            <input class="form-control" id="bytesToAdd" name="bytesToAdd"
+                      th:value="${bytesToAdd}" aria-describedby="bytesToAddHelp" placeholder="Ciąg bajtów" required>
+            <small id="bytesToAddHelp" class="form-text text-muted">*W systemie dziesiątkowym</small>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Wyślij">
+        </div>
+    </form>
+    <hr>
+    <h4 style="text-align: center" th:text="${userMessage}"></h4>
+</div>
+
+
+</body>
+</html>
