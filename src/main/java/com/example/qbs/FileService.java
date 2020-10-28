@@ -148,7 +148,7 @@ public class FileService {
      */
     private static String userMessage(int n) {
         if (n % 10 == 1) return n + " Plik został pomyślnie zmodyfikowany";
-        if (n % 10 == 2 || n % 10 == 3 || n % 10 == 4) return n + " Pliki został pomyślnie zmodyfikowane";
+        if (n % 10 == 2 || n % 10 == 3 || n % 10 == 4) return n + " Pliki zostały pomyślnie zmodyfikowane";
         else return n + " Plików zostały pomyślnie zmodyfikowane";
     }
 
