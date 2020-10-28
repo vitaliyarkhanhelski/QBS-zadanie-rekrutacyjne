@@ -1,5 +1,9 @@
 package com.example.qbs;
 
+import com.example.qbs.exceptons.FileDoesntContainThisByteCode;
+import com.example.qbs.exceptons.FileWithThisExtensionDoesntExist;
+import com.example.qbs.exceptons.SameByteCodesException;
+import com.example.qbs.exceptons.WrongFormatByteCodeException;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -20,11 +24,17 @@ public class FileService {
      * jeśli tak, przekazujemy dane do zmiany plików
      * zwraca Komunikat dla użytkownika
      */
-    public String changeByteArrayInFiles(String path, String extension, String toRemove, String toAdd) {
+    public String changeByteArrayInFiles(String path, String extension, String toRemove, String toAdd)
+            throws WrongFormatByteCodeException,
+            SameByteCodesException,
+            FileWithThisExtensionDoesntExist,
+            FileDoesntContainThisByteCode {
         if (!checkIfStringIsByteArray(toRemove) || !checkIfStringIsByteArray(toAdd)) {
-            return "Format kodu dziesiątkowego jest nieprawidłowy";
+            throw new WrongFormatByteCodeException("Format kodu dziesiątkowego jest nieprawidłowy");
         }
-        if (toRemove.equals(toAdd)) return "Ciągi bajtów są takie same";
+        if (toRemove.equals(toAdd)) {
+            throw new SameByteCodesException("Ciągi bajtów są takie same");
+        }
         List<Byte> bytesToRemove = convertStringToByteArray(toRemove);
         List<Byte> bytesToAdd = convertStringToByteArray(toAdd);
         return changeBytesInFiles(path, extension, bytesToRemove, bytesToAdd);
@@ -36,16 +46,18 @@ public class FileService {
      * i próbujemy zmienić ciąg bajtów w każdym pliku
      * zwraca odpowiedni Komunikat do użytkownika
      */
-    private String changeBytesInFiles(String path, String extension, List<Byte> bytesToRemove, List<Byte> bytesToAdd) {
+    private String changeBytesInFiles(String path, String extension, List<Byte> bytesToRemove, List<Byte> bytesToAdd)
+            throws FileWithThisExtensionDoesntExist,
+            FileDoesntContainThisByteCode {
         boolean fileWasChanged = false;
         int counter = 0;
 
         List<File> emptyList = new ArrayList<>();
         List<File> files = getMatchingFilesList(path, extension, emptyList);
 
-        if (files.size() == 0)
-            return "Żaden plik z rozszerzeniem '" + extension + "' nie istnieje w katalogu " + "'" + path + "'";
-        else {
+        if (files.size() == 0) {
+            throw new FileWithThisExtensionDoesntExist("Żaden plik z rozszerzeniem '" + extension + "' nie istnieje w katalogu " + "'" + path + "'");
+        } else {
             for (File file : files) {
                 boolean result = changeBytesInOneFile(file.getAbsolutePath(), bytesToRemove, bytesToAdd);
                 if (result) {
@@ -54,7 +66,11 @@ public class FileService {
                 }
             }
         }
-        return fileWasChanged ? userMessage(counter) : "Żaden plik nie zawiera podany ciąg bajtów";
+        if (!fileWasChanged) {
+            throw new FileDoesntContainThisByteCode("Żaden plik nie zawiera podany ciąg bajtów");
+        }
+
+        return userMessage(counter);
     }
 
 
