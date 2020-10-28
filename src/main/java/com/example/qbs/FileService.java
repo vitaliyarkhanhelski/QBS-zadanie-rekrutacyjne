@@ -4,6 +4,7 @@ import com.example.qbs.exceptons.FileDoesntContainThisByteCode;
 import com.example.qbs.exceptons.FileWithThisExtensionDoesntExist;
 import com.example.qbs.exceptons.SameByteCodesException;
 import com.example.qbs.exceptons.WrongFormatByteCodeException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@Slf4j
 public class FileService {
     /**
      * jedyna publiczna metoda, od której zaczyna się logika
@@ -30,9 +32,11 @@ public class FileService {
             FileWithThisExtensionDoesntExist,
             FileDoesntContainThisByteCode {
         if (!checkIfStringIsByteArray(toRemove) || !checkIfStringIsByteArray(toAdd)) {
+            log.warn("Format kodu dziesiątkowego jest nieprawidłowy");
             throw new WrongFormatByteCodeException("Format kodu dziesiątkowego jest nieprawidłowy");
         }
         if (toRemove.equals(toAdd)) {
+            log.warn("Ciągi bajtów są takie same");
             throw new SameByteCodesException("Ciągi bajtów są takie same");
         }
         List<Byte> bytesToRemove = convertStringToByteArray(toRemove);
@@ -56,6 +60,7 @@ public class FileService {
         List<File> files = getMatchingFilesList(path, extension, emptyList);
 
         if (files.size() == 0) {
+            log.warn("Żaden plik z rozszerzeniem '{}' nie istnieje w katalogu '{}'",extension,path);
             throw new FileWithThisExtensionDoesntExist("Żaden plik z rozszerzeniem '" + extension + "' nie istnieje w katalogu " + "'" + path + "'");
         } else {
             for (File file : files) {
@@ -67,6 +72,7 @@ public class FileService {
             }
         }
         if (!fileWasChanged) {
+            log.warn("Żaden plik nie zawiera podany ciąg bajtów");
             throw new FileDoesntContainThisByteCode("Żaden plik nie zawiera podany ciąg bajtów");
         }
 
