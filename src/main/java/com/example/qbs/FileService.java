@@ -169,9 +169,9 @@ public class FileService {
      * zwraca odpowiedni komunikat dla użytkownika wraz z ilością zmodyfikowanych plików
      */
     private String userMessage(int n) {
-        if (n % 10 == 1) return n + " Plik został pomyślnie zmodyfikowany";
-        if (n % 10 == 2 || n % 10 == 3 || n % 10 == 4) return n + " Pliki zostały pomyślnie zmodyfikowane";
-        else return n + " Plików zostały pomyślnie zmodyfikowane";
+        if (n % 10 == 1) return n + " plik został pomyślnie zmodyfikowany";
+        if (n % 10 == 2 || n % 10 == 3 || n % 10 == 4) return n + " pliki zostały pomyślnie zmodyfikowane";
+        else return n + " plików zostały pomyślnie zmodyfikowane";
     }
 
 }
