@@ -60,7 +60,7 @@ public class FileService {
         List<File> files = getMatchingFilesList(path, extension, emptyList);
 
         if (files.size() == 0) {
-            log.warn("Żaden plik z rozszerzeniem '{}' nie istnieje w katalogu '{}'",extension,path);
+            log.warn("Żaden plik z rozszerzeniem '{}' nie istnieje w katalogu '{}'", extension, path);
             throw new FileWithThisExtensionDoesntExist("Żaden plik z rozszerzeniem '" + extension + "' nie istnieje w katalogu " + "'" + path + "'");
         } else {
             for (File file : files) {
