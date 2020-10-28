@@ -36,7 +36,7 @@ public class FileService {
      * i próbujemy zmienić ciąg bajtów w każdym pliku
      * zwraca odpowiedni Komunikat do użytkownika
      */
-    private static String changeBytesInFiles(String path, String extension, List<Byte> bytesToRemove, List<Byte> bytesToAdd) {
+    private String changeBytesInFiles(String path, String extension, List<Byte> bytesToRemove, List<Byte> bytesToAdd) {
         boolean fileWasChanged = false;
         int counter = 0;
 
@@ -62,7 +62,7 @@ public class FileService {
      * dokonuje zmiany bajtów w jednym pliku o podanych parametrach
      * zwraca false w przypadku gdy ciąg bytów nie został odnalziony i zamieniony
      */
-    private static boolean changeBytesInOneFile(String absolutePath, List<Byte> bytesToRemove, List<Byte> bytesToAdd) {
+    private boolean changeBytesInOneFile(String absolutePath, List<Byte> bytesToRemove, List<Byte> bytesToAdd) {
         boolean flag = false;
 
         try {
@@ -96,7 +96,7 @@ public class FileService {
     /**
      * Konwertuje String w tablicę bytów
      */
-    private static List<Byte> convertStringToByteArray(String stringToConvert) {
+    private List<Byte> convertStringToByteArray(String stringToConvert) {
         String[] strings = stringToConvert.split(", ");
         List<Byte> bytes = new ArrayList<>();
 
@@ -109,7 +109,7 @@ public class FileService {
     /**
      * Sprawdzamy czy String zawiera poprawny ciąg bajtów w systemie dziesiątkowym
      */
-    private static boolean checkIfStringIsByteArray(String stringToCheck) {
+    private boolean checkIfStringIsByteArray(String stringToCheck) {
         String[] arrayToRemove = stringToCheck.split(", ");
 
         for (String i : arrayToRemove) {
@@ -127,7 +127,7 @@ public class FileService {
      * szuka za pomocą rekursji czy w ogóle mamy pliki o podanym rozszerzeniu
      * w podanym katalogu oraz podkatalogu
      */
-    private static List<File> getMatchingFilesList(String path, String extension, List<File> filesList) {
+    private List<File> getMatchingFilesList(String path, String extension, List<File> filesList) {
         File directoryPath = new File(path);
         File[] filesArray = directoryPath.listFiles();
 
@@ -146,7 +146,7 @@ public class FileService {
     /**
      * zwraca odpowiedni komunikat dla użytkownika wraz z ilością zmodyfikowanych plików
      */
-    private static String userMessage(int n) {
+    private String userMessage(int n) {
         if (n % 10 == 1) return n + " Plik został pomyślnie zmodyfikowany";
         if (n % 10 == 2 || n % 10 == 3 || n % 10 == 4) return n + " Pliki zostały pomyślnie zmodyfikowane";
         else return n + " Plików zostały pomyślnie zmodyfikowane";
