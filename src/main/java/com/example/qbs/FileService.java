@@ -22,9 +22,9 @@ import java.util.List;
 public class FileService {
     /**
      * jedyna publiczna metoda, od której zaczyna się logika
-     * sprawdzamy czy ciągi bajtów w systemie dziesiątkowym są poprawne i nie są takie same,
+     * sprawdzamy czy ciągi bajtów w systemie dziesiętnym są poprawne i nie są takie same,
      * jeśli tak, przekazujemy dane do zmiany plików
-     * zwraca Komunikat dla użytkownika
+     * zwraca Komunikat do użytkownika
      */
     public String changeByteArrayInFiles(String path, String extension, String toRemove, String toAdd)
             throws WrongFormatByteCodeException,
@@ -39,14 +39,14 @@ public class FileService {
             log.warn("Ciągi bajtów są takie same");
             throw new SameByteCodesException("Ciągi bajtów są takie same");
         }
-        List<Byte> bytesToRemove = convertStringToByteArray(toRemove);
-        List<Byte> bytesToAdd = convertStringToByteArray(toAdd);
+        List<Byte> bytesToRemove = convertStringToListOfBytes(toRemove);
+        List<Byte> bytesToAdd = convertStringToListOfBytes(toAdd);
         return changeBytesInFiles(path, extension, bytesToRemove, bytesToAdd);
     }
 
 
     /**
-     * jeśli pliki o podanym rozszerzeniu istnieją tworzymy listę tych plików
+     * jeśli pliki o podanym rozszerzeniu istnieją, tworzymy listę tych plików
      * i próbujemy zmienić ciąg bajtów w każdym pliku
      * zwraca odpowiedni Komunikat do użytkownika
      */
@@ -72,17 +72,16 @@ public class FileService {
             }
         }
         if (!fileWasChanged) {
-            log.warn("Żaden plik nie zawiera podany ciąg bajtów");
-            throw new FileDoesntContainThisByteCode("Żaden plik nie zawiera podany ciąg bajtów");
+            log.warn("Żaden plik nie zawiera podanego ciągu bajtów");
+            throw new FileDoesntContainThisByteCode("Żaden plik nie zawiera podanego ciągu bajtów");
         }
-
         return userMessage(counter);
     }
 
 
     /**
      * dokonuje zmiany bajtów w jednym pliku o podanych parametrach
-     * zwraca false w przypadku gdy ciąg bytów nie został odnalziony i zamieniony
+     * zwraca false w przypadku gdy ciąg bajtów nie został odnaleziony i zamieniony
      */
     private boolean changeBytesInOneFile(String absolutePath, List<Byte> bytesToRemove, List<Byte> bytesToAdd) {
         boolean flag = false;
@@ -116,10 +115,12 @@ public class FileService {
 
 
     /**
-     * Konwertuje String w tablicę bytów
+     * Konwertuje String w tablicę bajtów
      */
-    private List<Byte> convertStringToByteArray(String stringToConvert) {
-        String[] strings = stringToConvert.split(", ");
+    private List<Byte> convertStringToListOfBytes(String stringToConvert) {
+        stringToConvert = stringToConvert.replaceAll("\\s+", "");
+
+        String[] strings = stringToConvert.split(",");
         List<Byte> bytes = new ArrayList<>();
 
         for (String i : strings)
@@ -129,10 +130,11 @@ public class FileService {
 
 
     /**
-     * Sprawdzamy czy String zawiera poprawny ciąg bajtów w systemie dziesiątkowym
+     * Sprawdzamy czy String zawiera poprawny ciąg bajtów w systemie dziesiętnym
      */
     private boolean checkIfStringIsByteArray(String stringToCheck) {
-        String[] arrayToRemove = stringToCheck.split(", ");
+        stringToCheck = stringToCheck.replaceAll("\\s+", "");
+        String[] arrayToRemove = stringToCheck.split(",");
 
         for (String i : arrayToRemove) {
             try {
@@ -147,7 +149,7 @@ public class FileService {
 
     /**
      * szuka za pomocą rekursji czy w ogóle mamy pliki o podanym rozszerzeniu
-     * w podanym katalogu oraz podkatalogu
+     * w podanym katalogu oraz podkatalogach
      */
     private List<File> getMatchingFilesList(String path, String extension, List<File> filesList) {
         File directoryPath = new File(path);
@@ -166,12 +168,12 @@ public class FileService {
 
 
     /**
-     * zwraca odpowiedni komunikat dla użytkownika wraz z ilością zmodyfikowanych plików
+     * zwraca odpowiedni komunikat do użytkownika wraz z ilością zmodyfikowanych plików
      */
     private String userMessage(int n) {
         if (n % 10 == 1) return n + " plik został pomyślnie zmodyfikowany";
         if (n % 10 == 2 || n % 10 == 3 || n % 10 == 4) return n + " pliki zostały pomyślnie zmodyfikowane";
-        else return n + " plików zostały pomyślnie zmodyfikowane";
+        else return n + " plików zostało pomyślnie zmodyfikowanych";
     }
 
 }

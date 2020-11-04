@@ -19,7 +19,7 @@
 <div class="container">
     <header>
         <div style="background-color: #e3e3e3">
-            <h2 style="text-align: center; padding:15px">Zmiana ciągu baitów we wszystkich
+            <h2 style="text-align: center; padding:15px">Zmiana ciągu bajtów we wszystkich
                 plikach z odpowiednim
                 rozszerzeniem
                 w podanym
@@ -31,10 +31,10 @@
     <div class="container">
         <form method="post" action="/">
             <div class="form-group">
-                <label for="path">Podaj ściężkę do katalogu:</label>
+                <label for="path">Podaj ścieżkę do katalogu:</label>
                 <input class="form-control" type="text" name="path" id="path" th:value="${path}"
                        aria-describedby="pathHelp" placeholder="Ścieżka katalogu" required>
-                <small id="pathHelp" class="form-text text-muted">*Sprawdź dokładnie nazwę katalogu, gdyż niepoprawna nazwa katalogu może uszkodzić pliki</small>
+                <small id="pathHelp" class="form-text text-muted">*Sprawdź dokładnie nazwę katalogu, ponieważ niepoprawna nazwa katalogu może uszkodzić pliki</small>
 
             </div>
             <div class="form-group">
@@ -45,21 +45,21 @@
             </div>
 
             <div class="form-group">
-                <label for="bytesToRemove">Podaj ciąg bajtów który powinniśmy zmienić:</label>
+                <label for="bytesToRemove">Podaj ciąg bajtów, który powinniśmy zmienić:</label>
                 <input class="form-control" id="bytesToRemove" name="bytesToRemove"
                        th:value="${bytesToRemove}" aria-describedby="bytesToRemoveHelp" placeholder="Ciąg bajtów"
                        required>
-                <small id="bytesToRemoveHelp" class="form-text text-muted">*W systemie dziesiętnym, cyfry są
+                <small id="bytesToRemoveHelp" class="form-text text-muted">*W systemie dziesiętnym; cyfry są
                     oddzielone
                     przecinkami</small>
             </div>
 
             <div class="form-group">
-                <label for="bytesToAdd">Podaj ciąg bytów na który powinniśmy zmienić:</label>
+                <label for="bytesToAdd">Podaj ciąg bajtów, na który powinniśmy zmienić:</label>
                 <input class="form-control" id="bytesToAdd" name="bytesToAdd"
                        th:value="${bytesToAdd}" aria-describedby="bytesToAddHelp" placeholder="Ciąg bajtów"
                        required>
-                <small id="bytesToAddHelp" class="form-text text-muted">*W systemie dziesiętnym, cyfry są
+                <small id="bytesToAddHelp" class="form-text text-muted">*W systemie dziesiętnym; cyfry są
                     oddzielone
                     przecinkami</small>
             </div>
