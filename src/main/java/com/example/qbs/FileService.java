@@ -32,8 +32,8 @@ public class FileService {
             FileWithThisExtensionDoesntExist,
             FileDoesntContainThisByteCode {
         if (!checkIfStringIsByteArray(toRemove) || !checkIfStringIsByteArray(toAdd)) {
-            log.warn("Format kodu dziesiątkowego jest nieprawidłowy");
-            throw new WrongFormatByteCodeException("Format kodu dziesiątkowego jest nieprawidłowy");
+            log.warn("Format kodu dziesiętnego jest nieprawidłowy");
+            throw new WrongFormatByteCodeException("Format kodu dziesiętnego jest nieprawidłowy");
         }
         if (toRemove.equals(toAdd)) {
             log.warn("Ciągi bajtów są takie same");
